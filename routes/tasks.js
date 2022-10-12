@@ -1,6 +1,14 @@
 const express =require("express")
 const router = express.Router()
 
+/** difference between patch and put method
+ * put replaces the existing object permanatly and all property will be removed 
+ * though put methods only replaces the data mongoose will only update that data that has been changed 
+ * to completely remove it we need to set overwrite property as true
+ * 
+ * patch is like a partial update only the changed property is updated
+ */
+
 
 
 const{getOneRequest,

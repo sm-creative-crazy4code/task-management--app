@@ -1,7 +1,8 @@
 const express = require("express"); 
 const apitask=require("./routes/tasks");
 const connectDB = require('./db/connection');
-const e = require("express");
+
+const notfound=require("./middleware/not_found.")
 require('dotenv').config()
 
 const app= express();
@@ -12,6 +13,7 @@ app.use(express.json())
 
 // setting routes
 app.use("/api/task/v1",apitask)
+app.use(notfound)
 
 
 // middleware to read json response
