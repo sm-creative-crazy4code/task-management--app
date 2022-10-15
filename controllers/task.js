@@ -1,7 +1,7 @@
 const asyncwrapper = require("../middleware/asyncwrapper")
 const { findOne } = require("../models/tasks")
 const Task= require("../models/tasks")
-
+const{createCustomError}=require("../errors/custom-errors")
 
 // herr  we will be accessing all the query objects using the find method and since we are not passing any parameters we will be geytting all the objects 
 // queries are not promises but they have a .then() to return promisesherr
@@ -40,13 +40,19 @@ const task= await Task.create(req.body)
 //here we need the request params as well as request body
 // here in order to update the data we are using new:true and to check for validators we will be using runValidators:true
 
-const updateRequest= asyncwrapper( async (req,res)=>{
+const updateRequest= asyncwrapper( async (req,res,next)=>{
 
 
     const {id:taskID}=req.params
     const task = await Task.findOneAndUpdate({_id:taskID},req.body,{new:true,runValidators:true})
  if(!task){
-        return res.status(404).json({msg:`no task with id ${taskID}`})
+    // here we are creating an custum error and are passing to our error handler
+        // const error = new Error("sorry somthing went wrong")
+        // error.status=404
+        // return next(error)
+
+         return next(createCustomError(`no task with id ${taskID}`),404)
+        //return res.status(404).json({msg:`no task with id ${taskID}`})
      }
     res.status(200).json({task})}
     

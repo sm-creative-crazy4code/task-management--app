@@ -23,3 +23,5 @@ next(error)
 }
 
 module.exports=asyncwrapper
+
+// express has its build in error handeler and if we are not having any error handler specified then the bluild in one will handel the error

@@ -1,25 +1,28 @@
 const express = require("express"); 
 const apitask=require("./routes/tasks");
 const connectDB = require('./db/connection');
-
+const errorhandler= require("./middleware/errofr_handler")
 const notfound=require("./middleware/not_found.")
 require('dotenv').config()
 
 const app= express();
 
 app.use(express.static('./public'))
+
+// middleware to read json response
+
 app.use(express.json())
+
 
 
 // setting routes
 app.use("/api/task/v1",apitask)
 app.use(notfound)
+app.use(errorhandler)
 
+// we must not hardcode the value of port as it must be set according to the enviroment we are deploying
 
-// middleware to read json response
-
-
-const port=5000
+const port=process.env.PORT || 5000
 
 /** here we will first invoke the function connectDB only if we are successful then we will setup the server 
  * 
